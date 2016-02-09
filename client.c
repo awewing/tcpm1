@@ -70,9 +70,9 @@ int main(int argc, char* argv[] ) {
 void sendMessage(int sock, char *message) {
   const int32_t size = strlen(message);
   char msg[sizeof(int32_t) + size];
-    memset(msg, 0, sizeof(int32_t) + size);
+  memset(msg, '\0', sizeof(int32_t) + size);
   msg[0] = size;
   memcpy(&msg[sizeof(int32_t)], message, size);
-  printf("sending size: %d\n", size);
+  printf("sending size: %d\n sending messsage: %s\n", size, &msg[sizeof(int32_t)]);
   send(sock, msg, sizeof(uint32_t) + size, 0);
 }
