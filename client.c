@@ -50,8 +50,8 @@ int main(int argc, char* argv[] ) {
     while (1){
       char* line = NULL;
       size_t size;
-      if (getline(&line, &size , stdin) == -1) {
-          printf("wrong");
+      if (getline(&line, &size , stdin) == EOF) {
+          break;
       } else {
         printf("%s\n", line);
       }
