@@ -64,8 +64,11 @@ int main(int argc, char* argv[]) {
     char recSize[4];
       //const int recLen = 1024;
   
-    int reSize = recv(socketin, recSize, sizeof(uint32_t), 0);
+    int reSize = recv(socketin, recSize, sizeof(int32_t), 0);
     int size = (int)recSize[0];
+      if (size == -1){
+          break;
+      }
     printf("size: %d\n", size);
     char recBuf[size];
     int recVal = recv(socketin, recBuf, size, 0);

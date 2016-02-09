@@ -57,18 +57,20 @@ int main(int argc, char* argv[] ) {
       }
         sendMessage(socketfd, line);
     }
-    
-  sendMessage(socketfd, "Hello");
-  sendMessage(socketfd, "world!");
+    int32_t size = -1;
+    char msg[sizeof(int32_t)];
+    msg[0] = size;
+    printf("sending size: %d\n", size);
+    send(socketfd, msg, sizeof(int32_t), 0);
 
   close(socketfd);
 }
 
 void sendMessage(int sock, char *message) {
-  const uint32_t size = strlen(message);
-  char msg[sizeof(uint32_t) + size];
+  const int32_t size = strlen(message);
+  char msg[sizeof(int32_t) + size];
   msg[0] = size;
-  memcpy(&msg[sizeof(uint32_t)], message, size);
+  memcpy(&msg[sizeof(int32_t)], message, size);
   printf("sending size: %d\n", size);
   send(sock, msg, sizeof(uint32_t) + size, 0);
 }
