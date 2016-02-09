@@ -1,0 +1,4 @@
+Information for vm43
+
+IP address for eth0: 10.0.2.15
+IP address for eth1: 192.168.6.4
