@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
   while (1) {
     char recSize[4];
       //const int recLen = 1024;
-  
+      memset(recSize, 0, 4);
     int reSize = recv(socketin, recSize, sizeof(int32_t), 0);
     int size = (int)recSize[0];
       if (size == -1){
@@ -71,6 +71,7 @@ int main(int argc, char* argv[]) {
       }
     printf("size: %d\n", size);
     char recBuf[size];
+      memset(recBuf, 0, size);
     int recVal = recv(socketin, recBuf, size, 0);
     printf("%s\n", recBuf);
   }

@@ -59,6 +59,7 @@ int main(int argc, char* argv[] ) {
     }
     int32_t size = -1;
     char msg[sizeof(int32_t)];
+    memset(msg, 0, sizeof(int32_t));
     msg[0] = size;
     printf("sending size: %d\n", size);
     send(socketfd, msg, sizeof(int32_t), 0);
@@ -69,6 +70,7 @@ int main(int argc, char* argv[] ) {
 void sendMessage(int sock, char *message) {
   const int32_t size = strlen(message);
   char msg[sizeof(int32_t) + size];
+    memset(msg, 0, sizeof(int32_t) + size);
   msg[0] = size;
   memcpy(&msg[sizeof(int32_t)], message, size);
   printf("sending size: %d\n", size);
