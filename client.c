@@ -57,6 +57,6 @@ void sendMessage(int sock, char *message) {
   const uint32_t size = strlen(message);
   char msg[sizeof(uint32_t) + size];
   msg[0] = size;
-  memcpy(msg[sizeof(uint32_t)], message, size);
+  memcpy(msg, message, size);
   send(sock, msg, sizeof(uint32_t) + size, 0);
 }
