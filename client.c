@@ -55,9 +55,8 @@ int main(int argc, char* argv[] ) {
 
 void sendMessage(int sock, char *message) {
   const uint32_t size = strlen(message);
-  // first send size of message
-  send(sock, &size, sizeof(uint32_t), 0);
-
-  // second, send actual message
-  send(sock, message, strlen(message), 0);
+  char msg[sizeof(uint32_t) + size];
+  msg[0] = size;
+  memcpy(msg[sizeof(uint32_t)], message, size);
+  send(sock, msg, sizeof(uint32_t) + size, 0);
 }

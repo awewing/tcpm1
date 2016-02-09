@@ -60,10 +60,14 @@ int main(int argc, char* argv[]) {
   }
 
   // Begin receiving messages
-  void *recBuf = NULL;
-  const int recLen = 1024;  
-
-  int recVal = recv(socketin, recBuf, recLen, 0);
+    char recSize[4];
+  //const int recLen = 1024;
+  
+  int reSize = recv(socketin, recSize, sizeof(uint32_t), 0);
+  int size = (int)recSize[0];
+    char recBuf[size];
+  int recVal = recv(socketin, recBuf, size, 0);
+  printf("%s", recBuf);
   
 
 /*  while( (recLen = recv(socketin, recBuf, sizeof(recBuf), 0))) {
