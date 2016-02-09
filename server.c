@@ -60,16 +60,17 @@ int main(int argc, char* argv[]) {
   }
 
   // Begin receiving messages
+  while (1) {
     char recSize[4];
-  //const int recLen = 1024;
+      //const int recLen = 1024;
   
-  int reSize = recv(socketin, recSize, sizeof(uint32_t), 0);
-  int size = (int)recSize[0];
-  printf("size: %d\n", size);
-  char recBuf[size];
-  int recVal = recv(socketin, recBuf, size, 0);
-  printf("%s\n", recBuf);
-  
+    int reSize = recv(socketin, recSize, sizeof(uint32_t), 0);
+    int size = (int)recSize[0];
+    printf("size: %d\n", size);
+    char recBuf[size];
+    int recVal = recv(socketin, recBuf, size, 0);
+    printf("%s\n", recBuf);
+  }
 
 /*  while( (recLen = recv(socketin, recBuf, sizeof(recBuf), 0))) {
     // TODO: Print input here

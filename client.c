@@ -47,6 +47,17 @@ int main(int argc, char* argv[] ) {
   }
 
   // Start sending data
+    while (1){
+      char* line = NULL;
+      size_t size;
+      if (getline(&line, &size , stdin) == -1) {
+          printf("wrong");
+      } else {
+        printf("%s\n", line);
+      }
+        sendMessage(socketfd, line);
+    }
+    
   sendMessage(socketfd, "Hello");
   sendMessage(socketfd, "world!");
 
