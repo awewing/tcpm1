@@ -63,7 +63,7 @@ int main(int argc, char* argv[] ) {
 void sendMessage(int sock, char *message) {
   const int32_t size = htonl(strlen(message));
   if (debugflag) {
-    printf("passed const size: %d\n", (int32_t)size);
+    printf("passed const size: %d\n", ntohl(size));
   }
   char *msgSizeStr = (char *) &size;
 
