@@ -64,7 +64,11 @@ void sendMessage(int sock, char *message) {
   const int32_t size = strlen(message);
   char msg[sizeof(int32_t) + size];
   memset(msg, '\0', sizeof(int32_t) + size);
+  memcpy(&msg[0], &size, sizeof(int32_t));
   msg[0] = size;
+  if (debugflag) {
+    printf("msg size: %d\n", (int)msg[0]);
+  }
   memcpy(&msg[sizeof(int32_t)], message, size);
   if (debugflag) {
     printf("sending size: %d\n sending messsage: %s\n", size, &msg[sizeof(int32_t)]);
