@@ -66,7 +66,7 @@ void sendMessage(int sock, char *message) {
   if (debugflag) {
     printf("passed const size: %d\n", (int)size);
   }
-  // char *msgSizeStr = (char *) &tsize;
+  char *msgSizeStr = (char *) &tsize;
 
   // arrange string to be sent
   char msg[sizeof(int32_t) + size];
@@ -77,7 +77,8 @@ void sendMessage(int sock, char *message) {
   if (debugflag) {
     printf("sending size: %d\n sending messsage: %s\n", size, &msg[sizeof(int32_t)]);
   }
-  send(sock, msg, sizeof(uint32_t) + size, 0);
+  send(sock, msgSizeStr, 4, 0);
+  //send(sock, msg, sizeof(uint32_t) + size, 0);
 }
 
 void sendEnd(int sock) {
