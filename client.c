@@ -67,16 +67,15 @@ void sendMessage(int sock, char *message) {
   }
   char *msgSizeStr = (char *) &size;
 
+  // arrange string to be sent
   char msg[sizeof(int32_t) + size];
-  memset(msg, '\0', sizeof(int32_t) + size);
-  // memset(msgSizeStr, '\0', sizeof(int32_t));
+  memset(msg, '\0', sizeof(int32_t) + ntohl(size));
   memcpy(&msg[0], &size, sizeof(int32_t));
-  //sprintf(msg, "%d", size);
-  //msg[0] = size;
+  memcpy(&msg[sizeof(int32_t)], message, ntohl(size));
+
   if (debugflag) {
-    printf("msg size: %d\n", msgSizeStr);
+    printf("msg size: %d\n", (int)msgSizeStr);
   }
-  memcpy(&msg[sizeof(int32_t)], message, size);
   if (debugflag) {
     printf("sending size: %d\n sending messsage: %s\n", size, &msg[sizeof(int32_t)]);
   }
