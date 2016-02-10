@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
   while (1) {
     char recSize[4];
     //const int recLen = 1024;
-    memset(recSize, '\0', 4);
+    memset(recSize, 0, 4);
     recReturn = recv(socketin, recSize, sizeof(int32_t), 0);
     if (debugflag) {
       printf("recv returned: %d\n", recReturn);
@@ -84,4 +84,20 @@ int main(int argc, char* argv[]) {
 
   close(socketin);
   close(socketfd);
+}
+
+// receives up to several packets to construct the entire line
+//  of input coming from the client side.
+void receiveMessage(int socketin) {
+  // get size of total message
+  char msgSize[4];
+  memset(msgSize, 0, 4);
+  
+  int recvSize = recv(socketin, msgSize, sizeof(int32_t), 0);
+  if (debugflag) {
+    printf("received size: %d\n", recvSize);
+  }
+  //int size = (int);
+
+  // loop until
 }
