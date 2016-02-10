@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
     }
     printf("size: %d\n", size);
     char recBuf[size];
-    memset(recBuf, '\0', size);
+    memset(recBuf, '\0', size + sizeof(int32_t));
     int recVal = recv(socketin, recBuf, size, 0);
     printf("%s\n", recBuf);
   }
