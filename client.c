@@ -62,6 +62,9 @@ int main(int argc, char* argv[] ) {
 
 void sendMessage(int sock, char *message) {
   const int32_t size = htonl(strlen(message));
+  if (debugflag) {
+    printf("passed const size: %d\n", (int32_t)size);
+  }
   char *msgSizeStr = (char *) &size;
 
   char msg[sizeof(int32_t) + size];
@@ -71,7 +74,7 @@ void sendMessage(int sock, char *message) {
   //sprintf(msg, "%d", size);
   //msg[0] = size;
   if (debugflag) {
-    printf("msg size: %d\n", (int32_t)&msg);
+    printf("msg size: %d\n", msgSizeStr);
   }
   memcpy(&msg[sizeof(int32_t)], message, size);
   if (debugflag) {
