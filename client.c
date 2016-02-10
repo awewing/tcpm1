@@ -66,7 +66,7 @@ void sendMessage(int sock, char *message) {
   if (debugflag) {
     printf("passed const size: %d\n", (int)size);
   }
-  char *msgSizeStr = (char *) &tsize;
+  // char *msgSizeStr = (char *) &tsize;
 
   // arrange string to be sent
   char msg[sizeof(int32_t) + size];
@@ -74,9 +74,6 @@ void sendMessage(int sock, char *message) {
   memcpy(&msg[0], &tsize, sizeof(int32_t));
   memcpy(&msg[sizeof(int32_t)], message, size);
 
-  if (debugflag) {
-    printf("msg size: %d\n", (int)msgSizeStr);
-  }
   if (debugflag) {
     printf("sending size: %d\n sending messsage: %s\n", size, &msg[sizeof(int32_t)]);
   }

@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
     if (debugflag) {
       printf("recv returned: %d\n", recReturn);
     }
-    int size = (int)recSize[0];
+    int32_t size = ntohl(recSize[0]);
     if (size == -1){
       break;
     }
