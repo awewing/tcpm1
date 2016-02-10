@@ -61,17 +61,18 @@ int main(int argc, char* argv[] ) {
 }
 
 void sendMessage(int sock, char *message) {
-  const int32_t size = htonl(strlen(message));
+  const int32_t size = strlen(message);
+  const int32_t tsize = htonl(strlen(message));
   if (debugflag) {
-    printf("passed const size: %d\n", ntohl(size));
+    printf("passed const size: %d\n", (int)size);
   }
-  char *msgSizeStr = (char *) &size;
+  char *msgSizeStr = (char *) &tsize;
 
   // arrange string to be sent
   char msg[sizeof(int32_t) + size];
-  memset(msg, '\0', sizeof(int32_t) + ntohl(size));
-  memcpy(&msg[0], &size, sizeof(int32_t));
-  memcpy(&msg[sizeof(int32_t)], message, ntohl(size));
+  memset(msg, '\0', sizeof(int32_t) + size);
+  memcpy(&msg[0], &tsize, sizeof(int32_t));
+  memcpy(&msg[sizeof(int32_t)], message, size);
 
   if (debugflag) {
     printf("msg size: %d\n", (int)msgSizeStr);
