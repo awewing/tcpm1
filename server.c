@@ -59,11 +59,15 @@ int main(int argc, char* argv[]) {
   }
 
   // Begin receiving messages
+  int recReturn;
   while (1) {
     char recSize[4];
     //const int recLen = 1024;
     memset(recSize, '\0', 4);
-    int reSize = recv(socketin, recSize, sizeof(int32_t), 0);
+    recReturn = recv(socketin, recSize, sizeof(int32_t), 0);
+    if (debugflag) {
+      printf("recv returned: %d\n", recReturn);
+    }
     int size = (int)recSize[0];
     if (size == -1){
       break;
@@ -71,7 +75,10 @@ int main(int argc, char* argv[]) {
     printf("size: %d\n", size);
     char recBuf[size];
     memset(recBuf, '\0', size + sizeof(int32_t));
-    int recVal = recv(socketin, recBuf, size, 0);
+    recReturn = recv(socketin, recBuf, size, 0);
+    if (debugflag) {
+      printf("recv returned: %d\n", recReturn);
+    }
     printf("%s\n", recBuf);
   }
 
