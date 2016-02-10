@@ -73,13 +73,13 @@ int main(int argc, char* argv[]) {
       break;
     }
     printf("size: %d\n", size);
-    char recBuf[size];
-    memset(recBuf, '\0', size + sizeof(int32_t));
-    recReturn = recv(socketin, recBuf, size, 0);
-    if (debugflag) {
-      printf("recv returned: %d\n", recReturn);
-    }
-    printf("%s\n", recBuf);
+    // char recBuf[size];
+    // memset(recBuf, '\0', size + sizeof(int32_t));
+    // recReturn = recv(socketin, recBuf, size, 0);
+    // if (debugflag) {
+    //   printf("recv returned: %d\n", recReturn);
+    // }
+    // printf("%s\n", recBuf);
   }
 
   close(socketin);
