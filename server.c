@@ -68,11 +68,11 @@ int main(int argc, char* argv[]) {
     if (debugflag) {
       printf("recv returned: %d\n", recReturn);
     }
-    int32_t size = ntohl(recSize[0]);
+    int32_t size = ntohl(recSize);
     if (size == -1){
       break;
     }
-    printf("size: %d\n", size);
+    printf("size: %d\n", (int32_t)size);
     // char recBuf[size];
     // memset(recBuf, '\0', size + sizeof(int32_t));
     // recReturn = recv(socketin, recBuf, size, 0);
