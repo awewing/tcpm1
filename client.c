@@ -18,6 +18,7 @@
 #include "client.h"
 
 void sendMessage(int sock, char* message);
+void sendEnd(int sock);
 
 int main(int argc, char* argv[] ) {
   if (argc < 3) {
@@ -47,23 +48,17 @@ int main(int argc, char* argv[] ) {
   }
 
   // Start sending data
-    while (1){
-      char* line = NULL;
-      size_t size;
-      if (getline(&line, &size , stdin) == EOF) {
-          break;
-      } else {
-        printf("%s\n", line);
-      }
-        sendMessage(socketfd, line);
+  while (1){
+    char* line = NULL;
+    size_t size;
+    if (getline(&line, &size , stdin) == EOF) {
+        break;
+    } else {
+      printf("%s\n", line);
     }
-    int32_t size = -1;
-    char msg[sizeof(int32_t)];
-    memset(msg, 0, sizeof(int32_t));
-    msg[0] = size;
-    printf("sending size: %d\n", size);
-    send(socketfd, msg, sizeof(int32_t), 0);
-
+      sendMessage(socketfd, line);
+  }
+  sendEnd(socketfd);
   close(socketfd);
 }
 
@@ -75,4 +70,13 @@ void sendMessage(int sock, char *message) {
   memcpy(&msg[sizeof(int32_t)], message, size);
   printf("sending size: %d\n sending messsage: %s\n", size, &msg[sizeof(int32_t)]);
   send(sock, msg, sizeof(uint32_t) + size, 0);
+}
+
+void sendEnd(int sock) {
+  int32_t size = -1;
+  char msg[sizeof(int32_t)];
+  memset(msg, '\0', sizeof(int32_t));
+  msg[0] = size;
+  printf("sending size: %d\n", size);
+  send(sock, msg, sizeof(int32_t), 0);
 }

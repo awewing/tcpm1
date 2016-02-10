@@ -47,7 +47,6 @@ int main(int argc, char* argv[]) {
   // listen
   listen(socketfd, 5);
 
-
   // init client socket
   int socketin;
   int clientSize = sizeof(clientAddr);
@@ -62,26 +61,20 @@ int main(int argc, char* argv[]) {
   // Begin receiving messages
   while (1) {
     char recSize[4];
-      //const int recLen = 1024;
-      memset(recSize, 0, 4);
+    //const int recLen = 1024;
+    memset(recSize, '\0', 4);
     int reSize = recv(socketin, recSize, sizeof(int32_t), 0);
     int size = (int)recSize[0];
-      if (size == -1){
-          break;
-      }
+    if (size == -1){
+      break;
+    }
     printf("size: %d\n", size);
     char recBuf[size];
-      memset(recBuf, 0, size);
+    memset(recBuf, '\0', size);
     int recVal = recv(socketin, recBuf, size, 0);
     printf("%s\n", recBuf);
   }
 
-/*  while( (recLen = recv(socketin, recBuf, sizeof(recBuf), 0))) {
-    // TODO: Print input here
-    printf();
-  }
-*/
-  // TODO: clean up code
   close(socketin);
   close(socketfd);
 }
