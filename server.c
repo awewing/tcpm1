@@ -85,7 +85,7 @@ int receiveMessage(int socketin) {
   
   int recvSize = recv(socketin, msgSize, sizeof(int32_t), 0);
   if (debugflag) {
-    printf("received size: %d\n", recvSize);
+    printf("received size: %d\n", recvSize - 1);
   }
   //int size = (int);
   int32_t size = *(int32_t *)msgSize;

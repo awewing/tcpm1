@@ -63,6 +63,10 @@ int main(int argc, char* argv[] ) {
 void sendMessage(int sock, char *message) {
   const int32_t size = strlen(message);
   const int32_t tsize = htonl(strlen(message));
+  if (size > 1025){
+    printf("Message size too long\n");
+    return;
+  }
   if (debugflag) {
     printf("passed const size: %d\n", (int)size);
   }
@@ -79,7 +83,7 @@ void sendMessage(int sock, char *message) {
   memcpy(&msg[sizeof(int32_t)], message, size);
 
   if (debugflag) {
-    printf("sending size: %d\nsending messsage: %s\n", *(int32_t *)msg, &msg[sizeof(int32_t)]);
+    printf("sending size: %d\nsending messsage: %s", *(int32_t *)msg, &msg[sizeof(int32_t)]);
   }
   send(sock, msg, sizeof(uint32_t) + size, 0);
 }

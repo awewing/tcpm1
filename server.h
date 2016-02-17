@@ -1,6 +1,6 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#define debugflag 1
+#define debugflag 0
 
 #endif // SERVER_H
