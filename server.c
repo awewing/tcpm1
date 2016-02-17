@@ -1,4 +1,5 @@
 // Alex Ewing
+// Jonathan Wright
 // CSC 425
 // Milestone 1
 // Server

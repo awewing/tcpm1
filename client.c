@@ -1,4 +1,5 @@
 // Alex Ewing
+// Jonathan Wright
 // CSC 425
 // Milestone 1
 // Client
@@ -23,7 +24,7 @@ void sendEnd(int sock);
 int main(int argc, char* argv[] ) {
   if (argc < 3) {
     printf("Error: Incorrect arguments.\n");
-    printf("Usage: ./client.c port ipAddress\n");
+    printf("Usage: ./client ipAddress sport\n");
     exit(1);
   }
 
@@ -55,6 +56,7 @@ int main(int argc, char* argv[] ) {
       break;
     }
     sendMessage(socketfd, line);
+    printf("\n");
   }
   sendEnd(socketfd);
   close(socketfd);
