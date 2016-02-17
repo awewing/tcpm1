@@ -68,8 +68,8 @@ void sendMessage(int sock, char *message) {
   }
 
   // arrange string to be sent
-  unsigned char msg[sizeof(int32_t) + size];
-  memset(msg, '\0', sizeof(int32_t) + size);
+  unsigned char msg[sizeof(int32_t) + size + 1];
+  memset(msg, '\0', sizeof(int32_t) + size + 1);
 
   msg[0] = (tsize >> 24) & 0xFF;
   msg[1] = (tsize >> 16) & 0xFF;

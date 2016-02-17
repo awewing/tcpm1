@@ -100,8 +100,8 @@ int receiveMessage(int socketin) {
 
   // loop for the message
   int bytesLeft = size;
-  char message[size];
-  memset(message, '\0', size);
+  char message[size + 1];
+  memset(message, '\0', size + 1);
 
   while (bytesLeft > 0) {
     recvSize = recv(socketin, &message[size - bytesLeft], bytesLeft, 0);
