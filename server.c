@@ -17,6 +17,8 @@
 
 #include "server.h"
 
+int receiveMessage(int socketin);
+
 int main(int argc, char* argv[]) {
   if (argc < 2) {
     printf("Error: invalid arguments\n");
@@ -59,27 +61,14 @@ int main(int argc, char* argv[]) {
   }
 
   // Begin receiving messages
-  int recReturn;
   while (1) {
-    char recSize[4];
-    //const int recLen = 1024;
-    memset(recSize, 0, 4);
-    recReturn = recv(socketin, recSize, sizeof(int32_t), 0);
-    if (debugflag) {
-      printf("recv returned: %d\n", recReturn);
-    }
-    int32_t size = ntohl(recSize);
-    if (size == -1){
+    // Recieve a message
+    funcRes = receiveMessage(socketin);
+
+    // if end of client, break
+    if (funcRes < 0)
       break;
-    }
-    printf("size: %d\n", (int32_t)size);
-    // char recBuf[size];
-    // memset(recBuf, '\0', size + sizeof(int32_t));
-    // recReturn = recv(socketin, recBuf, size, 0);
-    // if (debugflag) {
-    //   printf("recv returned: %d\n", recReturn);
-    // }
-    // printf("%s\n", recBuf);
+
   }
 
   close(socketin);
@@ -88,7 +77,8 @@ int main(int argc, char* argv[]) {
 
 // receives up to several packets to construct the entire line
 //  of input coming from the client side.
-void receiveMessage(int socketin) {
+//  returns -1 if client closes connection
+int receiveMessage(int socketin) {
   // get size of total message
   char msgSize[4];
   memset(msgSize, 0, 4);
@@ -98,6 +88,31 @@ void receiveMessage(int socketin) {
     printf("received size: %d\n", recvSize);
   }
   //int size = (int);
+  int32_t size = *(int32_t *)msgSize;
+  
+  // Print size
+  printf("size: %d\n", size);
 
-  // loop until
+  // return -1 if client signals it is exiting
+  if (size == -1) {
+    return -1;
+  }
+
+  // loop for the message
+  int bytesLeft = size;
+  char message[size];
+  memset(message, '\0', size);
+
+  while (bytesLeft > 0) {
+    recvSize = recv(socketin, &message[size - bytesLeft], bytesLeft, 0);
+    if (debugflag) {
+      printf("received size of %d\n", recvSize);
+    }
+
+    bytesLeft -=recvSize;
+  }
+
+  // Print message
+  printf("%s\n", message);
+  return 0;
 }

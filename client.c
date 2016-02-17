@@ -66,19 +66,22 @@ void sendMessage(int sock, char *message) {
   if (debugflag) {
     printf("passed const size: %d\n", (int)size);
   }
-  char *msgSizeStr = (char *) &tsize;
 
   // arrange string to be sent
-  char msg[sizeof(int32_t) + size];
+  unsigned char msg[sizeof(int32_t) + size];
   memset(msg, '\0', sizeof(int32_t) + size);
-  memcpy(&msg[0], &tsize, sizeof(int32_t));
-  // memcpy(&msg[sizeof(int32_t)], message, size);
+
+  msg[0] = (tsize >> 24) & 0xFF;
+  msg[1] = (tsize >> 16) & 0xFF;
+  msg[2] = (tsize >> 8) & 0xFF;
+  msg[3] = tsize & 0xFF;
+
+  memcpy(&msg[sizeof(int32_t)], message, size);
 
   if (debugflag) {
-    printf("sending size: %d\n sending messsage: %s\n", size, &msg[sizeof(int32_t)]);
+    printf("sending size: %d\n sending messsage: %s\n", *(int32_t *)msg, &msg[sizeof(int32_t)]);
   }
-  send(sock, msgSizeStr, 4, 0);
-  //send(sock, msg, sizeof(uint32_t) + size, 0);
+  send(sock, msg, sizeof(uint32_t) + size, 0);
 }
 
 void sendEnd(int sock) {
