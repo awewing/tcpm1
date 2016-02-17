@@ -52,7 +52,7 @@ int main(int argc, char* argv[] ) {
     char* line = NULL;
     size_t size;
     if (getline(&line, &size , stdin) == EOF) {
-        break;
+      break;
     }
     sendMessage(socketfd, line);
   }
@@ -79,18 +79,22 @@ void sendMessage(int sock, char *message) {
   memcpy(&msg[sizeof(int32_t)], message, size);
 
   if (debugflag) {
-    printf("sending size: %d\n sending messsage: %s\n", *(int32_t *)msg, &msg[sizeof(int32_t)]);
+    printf("sending size: %d\nsending messsage: %s\n", *(int32_t *)msg, &msg[sizeof(int32_t)]);
   }
   send(sock, msg, sizeof(uint32_t) + size, 0);
 }
 
 void sendEnd(int sock) {
-  int32_t size = -1;
+  int32_t tsize = -1;
   char msg[sizeof(int32_t)];
   memset(msg, '\0', sizeof(int32_t));
-  msg[0] = size;
+  msg[0] = (tsize >> 24) & 0xFF;
+  msg[1] = (tsize >> 16) & 0xFF;
+  msg[2] = (tsize >> 8) & 0xFF;
+  msg[3] = tsize & 0xFF;
+
   if (debugflag) {
-    printf("sending size: %d\n", size);
+    printf("sending size: %d\n", tsize);
   }
   send(sock, msg, sizeof(int32_t), 0);
 }
