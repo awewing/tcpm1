@@ -92,7 +92,7 @@ int receiveMessage(int socketin) {
   int32_t size = *(int32_t *)msgSize;
   
   // Print size
-  printf("size: %d\n", size);
+  printf("size: %d\n", size - 1);
 
   // return -1 if client signals it is exiting
   if (size == -1) {
